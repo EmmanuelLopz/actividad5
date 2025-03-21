@@ -10,6 +10,8 @@ tiles = alphabet + lower_letters + alphabet + lower_letters
 state = {'mark': None}
 hide = [True] * 64
 taps = 0 # contador
+complete = False # Juego completado
+cont_complete = 0 #Contador para completado
 
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
@@ -79,7 +81,17 @@ def draw():
         color('black')
         # para centrar los numeros en el memorama
         write(tiles[mark], align ="center", font=('Arial', 30, 'normal'))
-
+    for casilla in hide:
+        if(casilla) == False:
+            global cont_complete
+            cont_complete += 1
+    if (cont_complete == 64):
+        up()
+        goto(-40,-300)
+        down()
+        color('black')
+        write("Rompecabezas completado",font=('Comic Sans',24,'bold'))
+    cont_complete = 0
     update()
     ontimer(draw, 100)
 
