@@ -2,9 +2,12 @@ from random import *
 from turtle import *
 
 from freegames import path
+import string 
 
 car = path('car.gif')
-tiles = list(range(32)) * 2
+alphabet = list(string.ascii_uppercase)
+lower_letters = ['a','b','c','d','e','f']
+tiles = alphabet + lower_letters + alphabet + lower_letters
 state = {'mark': None}
 hide = [True] * 64
 
