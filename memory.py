@@ -1,8 +1,7 @@
 from random import *
 from turtle import *
-
 from freegames import path
-import string 
+import string
 
 car = path('car.gif')
 alphabet = list(string.ascii_uppercase)
@@ -10,7 +9,7 @@ lower_letters = ['a','b','c','d','e','f']
 tiles = alphabet + lower_letters + alphabet + lower_letters
 state = {'mark': None}
 hide = [True] * 64
-
+taps = 0 # contador
 
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
@@ -37,9 +36,13 @@ def xy(count):
 
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
+    
+    global taps
     spot = index(x, y)
     mark = state['mark']
 
+    if hide[spot]:
+        taps += 1
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
     else:
@@ -54,20 +57,28 @@ def draw():
     goto(0, 0)
     shape(car)
     stamp()
+    #mostrar contador en el juego
+    up()
+    goto(0, 220)
+    color('black')
+    write(f'TAPS: {taps}', align='center', font=('Comic Sans', 24, 'bold'))
+
 
     for count in range(64):
         if hide[count]:
             x, y = xy(count)
             square(x, y)
 
+
     mark = state['mark']
 
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + 2, y)
+        goto(x + 25, y )
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
+        # para centrar los numeros en el memorama
+        write(tiles[mark], align ="center", font=('Arial', 30, 'normal'))
 
     update()
     ontimer(draw, 100)
